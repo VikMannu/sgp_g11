@@ -64,8 +64,7 @@ ROOT_URLCONF = 'sgp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -163,6 +162,7 @@ SITE_ID = 2
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+# Load private config locales
 try:
     from conf.local_settings import *
 except ImportError:
