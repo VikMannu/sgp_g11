@@ -157,7 +157,7 @@ SOCIALACCOUNT_PROVIDERS = {
 # The SCOPE from Google APIs
 # If the scope is not specified, it defaults to profile
 # To refresh authentication in the background, set AUTH_PARAMS['access_type'] to offline
-SITE_ID = 2
+SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
