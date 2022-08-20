@@ -37,6 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Register the oauth_app
+    'django.contrib.sites',
+    'oauth_app',
+
+    # Register django-allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -54,8 +64,7 @@ ROOT_URLCONF = 'sgp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,3 +135,39 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# The line allauth.socialaccount.providers.google specifies the OAuth provider since django-allauth supports many
+# OAuth providers. We will also set django-allauth as the authentication backend for our application in the
+# AUTHENTICATION_BACKEND configurations.
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
+
+# Set Google as the OAuth provider in the SOCIALACCOUNT_PROVIDERS settings.
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+# The SCOPE from Google APIs
+# If the scope is not specified, it defaults to profile
+# To refresh authentication in the background, set AUTH_PARAMS['access_type'] to offline
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Load private config locales
+try:
+    from conf.local_settings import *
+except ImportError:
+    pass
