@@ -15,18 +15,13 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-30q7!q)cw7628s(d8k3wn6w%i+=ug=sglg5!6s-m1lo3e12uk('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
-
+ALLOWED_HOSTS = ['localhost']  # For develop
 
 # Application definition
 
@@ -40,12 +35,13 @@ INSTALLED_APPS = [
 
     # Register the oauth_app
     'django.contrib.sites',
-    'oauth_app',
+    # 'django.contrib.sites.models.Site',
 
     # Register django-allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # include the providers you want to enable:
     'allauth.socialaccount.providers.google',
 ]
 
@@ -64,7 +60,7 @@ ROOT_URLCONF = 'sgp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sgp.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -93,7 +88,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -113,7 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -125,7 +118,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
@@ -136,16 +128,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# The SCOPE from Google APIs
+SITE_ID = 1
 
-# The line allauth.socialaccount.providers.google specifies the OAuth provider since django-allauth supports many
-# OAuth providers. We will also set django-allauth as the authentication backend for our application in the
-# AUTHENTICATION_BACKEND configurations.
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
-]
-
-# Set Google as the OAuth provider in the SOCIALACCOUNT_PROVIDERS settings.
+# Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -158,15 +144,15 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-# The SCOPE from Google APIs
-# If the scope is not specified, it defaults to profile
-# To refresh authentication in the background, set AUTH_PARAMS['access_type'] to offline
-SITE_ID = 1
+# AUTHENTICATION_BACKENDS settings
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-
-# Load private config locales
+# Load private settings locales
 try:
     from conf.local_settings import *
 except ImportError:
