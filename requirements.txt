@@ -5,3 +5,4 @@ setuptools==65.1.0
 sqlparse==0.4.2
 wheel==0.37.1
 psycopg2==2.9.3
+sphinx==5.1.1
