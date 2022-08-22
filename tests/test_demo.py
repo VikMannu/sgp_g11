@@ -1,10 +1,9 @@
 import pytest
-from django.urls import reverse
 
 
 # Test the Pytest library
 def test_working():
-   pass
+    pass
 
 
 # Test the admin view
