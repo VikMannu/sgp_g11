@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -33,8 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'social_django',  # for google-sso
-    'google-sso',
+    'social_django',  # for googlesso
+    'googlesso',
 ]
 
 MIDDLEWARE = {
@@ -46,7 +46,7 @@ MIDDLEWARE = {
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'social_django.middleware.SocialAuthExceptionMiddleware',  # for google-sso
+    'social_django.middleware.SocialAuthExceptionMiddleware',  # for googlesso
 }
 
 ROOT_URLCONF = 'sgp.urls'
@@ -64,7 +64,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                'social_django.context_processors.backends',  # for google-sso
+                'social_django.context_processors.backends',  # for googlesso
             ],
         },
     },
@@ -135,9 +135,6 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '################'
-SOCIAL_AUTH_GOOGLE_SECRET = '###############'
 
 # Load private settings locales
 try:
